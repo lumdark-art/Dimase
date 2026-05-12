@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Diego Marchi Sale · Soluciones digitales para gastronomía</title>
+  <title>Iego Marchi Sale · Soluciones digitales para gastronomía</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -33,7 +33,7 @@
     #intro-overlay {
       position: fixed;
       inset: 0;
-      background: #000;
+      background: rgba(0, 0, 0, 0.72);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -487,7 +487,7 @@
     }
 
     /* ── SCENE 6 ── */
-    #scene-6 {
+    #scene-7 {
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -495,7 +495,7 @@
       padding: 0 4vw;
     }
 
-    #scene-6 .s6-title {
+    #scene-7 .s6-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(3rem, 8vw, 8rem);
       font-weight: 300;
@@ -504,7 +504,7 @@
       margin-bottom: 1.25rem;
     }
 
-    #scene-6 .s6-sub {
+    #scene-7 .s6-sub {
       font-size: clamp(0.9rem, 1.4vw, 1.1rem);
       line-height: 1.8;
       opacity: 0.75;
@@ -514,7 +514,7 @@
       color: var(--crema);
     }
 
-    #scene-6 .cta-row {
+    #scene-7 .cta-row {
       display: flex;
       gap: 1rem;
       justify-content: center;
@@ -523,7 +523,7 @@
       pointer-events: all;
     }
 
-    #scene-6 .btn-wa {
+    #scene-7 .btn-wa {
       display: flex;
       align-items: center;
       gap: 0.6rem;
@@ -537,9 +537,9 @@
       transition: background 0.2s;
     }
 
-    #scene-6 .btn-wa:hover { background: #1ebe5b; }
+    #scene-7 .btn-wa:hover { background: #1ebe5b; }
 
-    #scene-6 .btn-mail {
+    #scene-7 .btn-mail {
       border: 1px solid rgba(240, 234, 216, 0.5);
       color: var(--crema);
       padding: 0.9rem 1.85rem;
@@ -550,9 +550,9 @@
       transition: border-color 0.2s, background 0.2s;
     }
 
-    #scene-6 .btn-mail:hover { border-color: var(--crema); background: rgba(240,234,216,0.06); }
+    #scene-7 .btn-mail:hover { border-color: var(--crema); background: rgba(240,234,216,0.06); }
 
-    #scene-6 .s6-footer {
+    #scene-7 .s6-footer {
       font-size: 0.78rem;
       letter-spacing: 0.14em;
       opacity: 0.4;
@@ -586,9 +586,9 @@
       .glass-card { max-width: 100%; flex: unset; width: 100%; }
       .pain-list { max-width: 100%; }
 
-      #scene-6 .s6-title { font-size: clamp(2.4rem, 13vw, 5rem); }
+      #scene-7 .s6-title { font-size: clamp(2.4rem, 13vw, 5rem); }
       .btn-row { flex-direction: column; }
-      #scene-6 .cta-row { flex-direction: column; align-items: center; }
+      #scene-7 .cta-row { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -596,20 +596,20 @@
 
   <!-- INTRO OVERLAY -->
   <div id="intro-overlay">
-    <div id="intro-name">Diego</div>
+    <div id="intro-name">Iego</div>
     <div id="intro-sub">Marchi Sale · Soluciones digitales</div>
   </div>
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#" class="logo">Diego</a>
+    <a href="#" class="logo">Iego</a>
     <button id="nav-toggle" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
       <li><a href="#" onclick="scrollToScene(3); closeNav(); return false;">Servicios</a></li>
       <li><a href="#" onclick="scrollToScene(4); closeNav(); return false;">Cómo trabajo</a></li>
-      <li><a href="#" onclick="scrollToScene(5); closeNav(); return false;" class="nav-cta">Hablemos</a></li>
+      <li><a href="#" onclick="scrollToScene(6); closeNav(); return false;" class="nav-cta">Hablemos</a></li>
     </ul>
   </nav>
 
@@ -620,6 +620,7 @@
   <video id="vid-dolor"   class="video-layer" src="videos/entrada.mp4" autoplay muted loop playsinline></video>
   <video id="vid-mesa"    class="video-layer" src="videos/mesa.mp4"    autoplay muted loop playsinline></video>
   <video id="vid-cocina"  class="video-layer" src="videos/cocina.mp4"  autoplay muted loop playsinline></video>
+  <video id="vid-ventana" class="video-layer" src="videos/ventana.mp4" autoplay muted loop playsinline></video>
   <video id="vid-cuenta"  class="video-layer" src="videos/cuenta.mp4"  autoplay muted loop playsinline></video>
   <div id="video-overlay"></div>
 
@@ -632,7 +633,7 @@
       <h1 class="s1-title">Tu local merece verse tan bien como cocina.</h1>
       <p class="s1-sub">Presencia digital simple para negocios gastronómicos que están arrancando.</p>
       <div class="btn-row">
-        <a href="#" onclick="scrollToScene(5); return false;" class="btn-primary">Quiero ver cómo quedaría mi local</a>
+        <a href="#" onclick="scrollToScene(6); return false;" class="btn-primary">Quiero ver cómo quedaría mi local</a>
         <a href="#" onclick="scrollToScene(3); return false;" class="btn-ghost">Ver ejemplos →</a>
       </div>
     </div>
@@ -718,8 +719,11 @@
       </div>
     </div>
 
-    <!-- SCENE 6: LA CUENTA -->
-    <div class="text-layer" id="scene-6">
+    <!-- SCENE 6: LA VENTANA (transición cinematográfica, sin texto) -->
+    <!-- el video ventana.mp4 es el fondo, sin text-layer -->
+
+    <!-- SCENE 7: LA CUENTA -->
+    <div class="text-layer" id="scene-7">
       <h2 class="s6-title">¿Arrancamos?</h2>
       <p class="s6-sub">Contame de tu local y en 24hs te digo qué solución le viene mejor — y cuánto sale. Sin compromiso.</p>
       <div class="cta-row">
@@ -742,11 +746,11 @@
       return document.getElementById('scroll-container').offsetHeight - window.innerHeight;
     }
 
-    // Convert percent of total scrollable distance → absolute px from top
     function pct(p) { return totalScrollable() * (p / 100); }
 
-    // Scroll to the approximate start of a scene (0-indexed: 0=scene1..5=scene6)
-    const SCENE_STARTS = [0, 15, 30, 45, 60, 75];
+    // 0=scene1(puerta) 1=scene2(entrada) 2=scene3(dolor)
+    // 3=scene4(mesa)   4=scene5(cocina)  5=scene6(ventana)  6=scene7(cuenta)
+    const SCENE_STARTS = [0, 14, 28, 43, 57, 69, 78];
     function scrollToScene(idx) {
       window.scrollTo({ top: pct(SCENE_STARTS[idx]), behavior: 'smooth' });
     }
@@ -764,13 +768,15 @@
 
     const overlay = document.getElementById('intro-overlay');
 
+    // vid-puerta visible desde el primer frame para que se vea detrás del overlay
+    gsap.set('#vid-puerta', { opacity: 1 });
+
     const introTl = gsap.timeline({ onComplete: enableScroll });
     introTl
       .to('#intro-name', { opacity: 1, duration: 0.9, ease: 'power2.out' })
       .to('#intro-sub',  { opacity: 0.5, duration: 0.6, ease: 'power2.out' }, '-=0.3')
       .to(['#intro-name','#intro-sub'], { opacity: 0, duration: 0.8, ease: 'power2.in', delay: 1.4 })
-      .to('#vid-puerta', { opacity: 1, duration: 1, ease: 'power2.inOut' }, '-=0.4')
-      .to(overlay, { opacity: 0, duration: 0.5, ease: 'power2.in' }, '-=0.3')
+      .to(overlay, { opacity: 0, duration: 0.8, ease: 'power2.in' }, '-=0.3')
       .to('#nav', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2')
       .set(overlay, { display: 'none' });
 
@@ -780,10 +786,7 @@
       window.removeEventListener('touchmove', noScroll);
     }
 
-    /* ─── CROSSFADE HELPER ───
-       Todos los callbacks para cubrir scroll hacia abajo y hacia arriba.
-       onLeave / onLeaveBack hacen gsap.set (instantáneo) para confirmar
-       el estado final en caso de que la animación haya sido interrumpida. ─── */
+    /* ─── CROSSFADE HELPER ─── */
     function xfade(showSel, hideSel, startPct, endPct) {
       ScrollTrigger.create({
         trigger: '#scroll-container',
@@ -796,14 +799,14 @@
       });
     }
 
-    /* video transitions (start / end as % of scrollable height) */
-    xfade('#vid-entrada', '#vid-puerta', 14, 17);
+    /* video transitions — percentages del alto scrolleable total */
+    xfade('#vid-entrada', '#vid-puerta', 12, 15);
 
     // dolor: vid-dolor + bg-dolor in, vid-entrada out
     ScrollTrigger.create({
       trigger: '#scroll-container',
-      start: () => `top+=${pct(29)}px top`,
-      end:   () => `top+=${pct(32)}px top`,
+      start: () => `top+=${pct(26)}px top`,
+      end:   () => `top+=${pct(29)}px top`,
       onEnter: () => {
         gsap.to('#vid-dolor',   { opacity: 1, duration: 0.9 });
         gsap.to('#bg-dolor',    { opacity: 1, duration: 0.9 });
@@ -829,8 +832,8 @@
     // mesa: vid-mesa in, vid-dolor + bg-dolor out
     ScrollTrigger.create({
       trigger: '#scroll-container',
-      start: () => `top+=${pct(44)}px top`,
-      end:   () => `top+=${pct(47)}px top`,
+      start: () => `top+=${pct(41)}px top`,
+      end:   () => `top+=${pct(44)}px top`,
       onEnter: () => {
         gsap.to('#vid-mesa',  { opacity: 1, duration: 0.9 });
         gsap.to('#vid-dolor', { opacity: 0, duration: 0.9 });
@@ -853,8 +856,9 @@
       },
     });
 
-    xfade('#vid-cocina', '#vid-mesa',   59, 62);
-    xfade('#vid-cuenta', '#vid-cocina', 74, 77);
+    xfade('#vid-cocina',  '#vid-mesa',    54, 57);
+    xfade('#vid-ventana', '#vid-cocina',  66, 69);
+    xfade('#vid-cuenta',  '#vid-ventana', 77, 80);
 
     /* ─── TEXT LAYER HELPER ─── */
     function textScene(sel, inPct, outPct, animateIn) {
@@ -872,15 +876,15 @@
       });
     }
 
-    /* ─── SCENE 1 ─── */
-    textScene('#scene-1', 0.5, 13.5, null);
+    /* ─── SCENE 1: puerta / hero ─── */
+    textScene('#scene-1', 0.5, 12, null);
 
-    /* ─── SCENE 2 ─── */
+    /* ─── SCENE 2: entrada / quién soy ─── */
     gsap.set(['#scene-2 .s2-label','#scene-2 .s2-title','#scene-2 .s2-para','#scene-2 .s2-quote'],
       { opacity: 0, y: 24 });
 
     let s2Played = false;
-    textScene('#scene-2', 16, 29, () => {
+    textScene('#scene-2', 14, 26, () => {
       if (s2Played) return;
       s2Played = true;
       gsap.to(['#scene-2 .s2-label','#scene-2 .s2-title','#scene-2 .s2-para'],
@@ -889,12 +893,12 @@
         { opacity: 1, y: 0, duration: 0.8, delay: 0.9, ease: 'power2.out' });
     });
 
-    /* ─── SCENE 3 ─── */
+    /* ─── SCENE 3: dolor ─── */
     gsap.set(['#scene-3 .s3-title','#scene-3 .s3-remate'], { opacity: 0, y: 20 });
     gsap.set('#scene-3 .pain-item', { opacity: 0, x: -20 });
 
     let s3Played = false;
-    textScene('#scene-3', 31, 44, () => {
+    textScene('#scene-3', 28, 41, () => {
       if (s3Played) return;
       s3Played = true;
       gsap.to('#scene-3 .s3-title', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' });
@@ -904,33 +908,33 @@
         { opacity: 1, y: 0, duration: 0.8, delay: 1.8, ease: 'power2.out' });
     });
 
-    /* hide video overlay during dolor (black bg handles darkness) */
+    /* ocultar video-overlay durante el dolor */
     ScrollTrigger.create({
       trigger: '#scroll-container',
-      start: () => `top+=${pct(29)}px top`,
-      end:   () => `top+=${pct(45)}px top`,
+      start: () => `top+=${pct(26)}px top`,
+      end:   () => `top+=${pct(43)}px top`,
       onEnter:     () => gsap.to('#video-overlay', { opacity: 0, duration: 0.5 }),
       onLeave:     () => gsap.to('#video-overlay', { opacity: 1, duration: 0.5 }),
       onEnterBack: () => gsap.to('#video-overlay', { opacity: 0, duration: 0.5 }),
       onLeaveBack: () => gsap.to('#video-overlay', { opacity: 1, duration: 0.5 }),
     });
 
-    /* ─── SCENE 4 ─── */
+    /* ─── SCENE 4: mesa / servicios ─── */
     gsap.set('#scene-4 .glass-card', { opacity: 0, y: 30 });
 
     let s4Played = false;
-    textScene('#scene-4', 46, 59, () => {
+    textScene('#scene-4', 43, 54, () => {
       if (s4Played) return;
       s4Played = true;
       gsap.to('#scene-4 .glass-card',
         { opacity: 1, y: 0, duration: 0.65, stagger: 0.25, ease: 'power2.out' });
     });
 
-    /* ─── SCENE 5 ─── */
+    /* ─── SCENE 5: cocina / cómo trabajo ─── */
     gsap.set(['#scene-5 .s5-label','#scene-5 .step-item'], { opacity: 0, y: 20 });
 
     let s5Played = false;
-    textScene('#scene-5', 61, 75, () => {
+    textScene('#scene-5', 57, 66, () => {
       if (s5Played) return;
       s5Played = true;
       gsap.to('#scene-5 .s5-label', { opacity: 0.5, y: 0, duration: 0.5 });
@@ -938,15 +942,17 @@
         { opacity: 1, y: 0, duration: 0.65, stagger: 0.3, delay: 0.3, ease: 'power2.out' });
     });
 
-    /* ─── SCENE 6 ─── */
-    gsap.set(['#scene-6 .s6-title','#scene-6 .s6-sub','#scene-6 .cta-row','#scene-6 .s6-footer'],
+    /* ─── SCENE 6: ventana — solo video, sin texto ─── */
+
+    /* ─── SCENE 7: cuenta / ¿Arrancamos? ─── */
+    gsap.set(['#scene-7 .s6-title','#scene-7 .s6-sub','#scene-7 .cta-row','#scene-7 .s6-footer'],
       { opacity: 0, y: 20 });
 
-    let s6Played = false;
-    textScene('#scene-6', 74, 99.5, () => {
-      if (s6Played) return;
-      s6Played = true;
-      gsap.to(['#scene-6 .s6-title','#scene-6 .s6-sub','#scene-6 .cta-row','#scene-6 .s6-footer'],
+    let s7Played = false;
+    textScene('#scene-7', 79, 99.5, () => {
+      if (s7Played) return;
+      s7Played = true;
+      gsap.to(['#scene-7 .s6-title','#scene-7 .s6-sub','#scene-7 .cta-row','#scene-7 .s6-footer'],
         { opacity: 1, y: 0, duration: 0.7, stagger: 0.2, ease: 'power2.out' });
     });
 
