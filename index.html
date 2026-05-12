@@ -781,39 +781,52 @@
     }
 
     /* ─── CROSSFADE HELPER ───
-       Fades `show` in and `hide` out when scroll enters the range [startPct, endPct].
-       Reverses on scroll back. ─── */
+       Todos los callbacks para cubrir scroll hacia abajo y hacia arriba.
+       onLeave / onLeaveBack hacen gsap.set (instantáneo) para confirmar
+       el estado final en caso de que la animación haya sido interrumpida. ─── */
     function xfade(showSel, hideSel, startPct, endPct) {
       ScrollTrigger.create({
         trigger: '#scroll-container',
         start: () => `top+=${pct(startPct)}px top`,
         end:   () => `top+=${pct(endPct)}px top`,
-        onEnter:      () => { gsap.to(showSel, { opacity: 1, duration: 0.9 }); gsap.to(hideSel, { opacity: 0, duration: 0.9 }); },
-        onEnterBack:  () => { gsap.to(hideSel, { opacity: 1, duration: 0.9 }); gsap.to(showSel, { opacity: 0, duration: 0.9 }); },
+        onEnter:     () => { gsap.to(showSel, { opacity: 1, duration: 0.9 }); gsap.to(hideSel, { opacity: 0, duration: 0.9 }); },
+        onLeave:     () => { gsap.set(showSel, { opacity: 1 }); gsap.set(hideSel, { opacity: 0 }); },
+        onEnterBack: () => { gsap.to(hideSel, { opacity: 1, duration: 0.9 }); gsap.to(showSel, { opacity: 0, duration: 0.9 }); },
+        onLeaveBack: () => { gsap.set(hideSel, { opacity: 1 }); gsap.set(showSel, { opacity: 0 }); },
       });
     }
 
     /* video transitions (start / end as % of scrollable height) */
     xfade('#vid-entrada', '#vid-puerta', 14, 17);
 
-    // dolor: vid-dolor (entrada at low opacity behind overlay) + bg-dolor in, vid-entrada out
+    // dolor: vid-dolor + bg-dolor in, vid-entrada out
     ScrollTrigger.create({
       trigger: '#scroll-container',
       start: () => `top+=${pct(29)}px top`,
       end:   () => `top+=${pct(32)}px top`,
       onEnter: () => {
-        gsap.to('#vid-dolor',  { opacity: 1, duration: 0.9 });
-        gsap.to('#bg-dolor',   { opacity: 1, duration: 0.9 });
-        gsap.to('#vid-entrada',{ opacity: 0, duration: 0.9 });
+        gsap.to('#vid-dolor',   { opacity: 1, duration: 0.9 });
+        gsap.to('#bg-dolor',    { opacity: 1, duration: 0.9 });
+        gsap.to('#vid-entrada', { opacity: 0, duration: 0.9 });
+      },
+      onLeave: () => {
+        gsap.set('#vid-dolor',   { opacity: 1 });
+        gsap.set('#bg-dolor',    { opacity: 1 });
+        gsap.set('#vid-entrada', { opacity: 0 });
       },
       onEnterBack: () => {
-        gsap.to('#vid-entrada',{ opacity: 1, duration: 0.9 });
-        gsap.to('#vid-dolor',  { opacity: 0, duration: 0.9 });
-        gsap.to('#bg-dolor',   { opacity: 0, duration: 0.9 });
+        gsap.to('#vid-entrada', { opacity: 1, duration: 0.9 });
+        gsap.to('#vid-dolor',   { opacity: 0, duration: 0.9 });
+        gsap.to('#bg-dolor',    { opacity: 0, duration: 0.9 });
+      },
+      onLeaveBack: () => {
+        gsap.set('#vid-entrada', { opacity: 1 });
+        gsap.set('#vid-dolor',   { opacity: 0 });
+        gsap.set('#bg-dolor',    { opacity: 0 });
       },
     });
 
-    // mesa: fade in mesa, fade out vid-dolor + bg-dolor
+    // mesa: vid-mesa in, vid-dolor + bg-dolor out
     ScrollTrigger.create({
       trigger: '#scroll-container',
       start: () => `top+=${pct(44)}px top`,
@@ -823,10 +836,20 @@
         gsap.to('#vid-dolor', { opacity: 0, duration: 0.9 });
         gsap.to('#bg-dolor',  { opacity: 0, duration: 0.9 });
       },
+      onLeave: () => {
+        gsap.set('#vid-mesa',  { opacity: 1 });
+        gsap.set('#vid-dolor', { opacity: 0 });
+        gsap.set('#bg-dolor',  { opacity: 0 });
+      },
       onEnterBack: () => {
         gsap.to('#vid-dolor', { opacity: 1, duration: 0.9 });
         gsap.to('#bg-dolor',  { opacity: 1, duration: 0.9 });
         gsap.to('#vid-mesa',  { opacity: 0, duration: 0.9 });
+      },
+      onLeaveBack: () => {
+        gsap.set('#vid-dolor', { opacity: 1 });
+        gsap.set('#bg-dolor',  { opacity: 1 });
+        gsap.set('#vid-mesa',  { opacity: 0 });
       },
     });
 
