@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diego Marchi Sale · Soluciones digitales para gastronomía</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde: #3a5c32;
+      --verde-claro: #587a4e;
+      --crema: #f0ead8;
+      --carbon: #1c2118;
+    }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      background: #000;
+      color: var(--crema);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── INTRO OVERLAY ── */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    #intro-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 300;
+      color: var(--crema);
+      letter-spacing: 0.08em;
+      opacity: 0;
+    }
+
+    #intro-sub {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(0.75rem, 1.5vw, 1rem);
+      font-weight: 300;
+      color: var(--crema);
+      opacity: 0;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 1rem;
+    }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(28, 33, 24, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(240, 234, 216, 0.08);
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+
+    #nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--crema);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    #nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    #nav .nav-links a {
+      color: var(--crema);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    #nav .nav-links a:hover { opacity: 1; }
+
+    #nav .nav-cta {
+      background: var(--verde);
+      color: var(--crema) !important;
+      opacity: 1 !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 4px;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+
+    #nav .nav-cta:hover { background: var(--verde-claro) !important; }
+
+    /* hamburger */
+    #nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    #nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--crema);
+      transition: all 0.3s;
+    }
+
+    /* ── SCROLL CONTAINER ── */
+    #scroll-container {
+      height: 700vh;
+      position: relative;
+    }
+
+    /* ── VIDEOS (fixed bg) ── */
+    .video-layer {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* dark overlay on videos (always present, hides during dolor) */
+    #video-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      background: rgba(28, 33, 24, 0.45);
+      pointer-events: none;
+    }
+
+    /* semi-transparent overlay for dolor scene, sits above videos */
+    #bg-dolor {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 2;
+      opacity: 0;
+    }
+
+    /* ── TEXT LAYERS (fixed, above video) ── */
+    .text-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    /* ── SCENE 1 ── */
+    #scene-1 {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 0 6vw 10vh;
+    }
+
+    .s1-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--crema);
+      opacity: 0.6;
+      margin-bottom: 1rem;
+      font-weight: 400;
+    }
+
+    .s1-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5.5vw, 5.2rem);
+      font-weight: 300;
+      color: var(--crema);
+      line-height: 1.1;
+      max-width: 720px;
+      margin-bottom: 1.25rem;
+    }
+
+    .s1-sub {
+      font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+      color: var(--crema);
+      opacity: 0.75;
+      max-width: 500px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      pointer-events: all;
+    }
+
+    .btn-primary {
+      background: var(--verde);
+      color: var(--crema);
+      padding: 0.85rem 1.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: var(--verde-claro); }
+
+    .btn-ghost {
+      border: 1px solid rgba(240, 234, 216, 0.5);
+      color: var(--crema);
+      padding: 0.85rem 1.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: border-color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-ghost:hover { border-color: var(--crema); background: rgba(240,234,216,0.06); }
+
+    /* ── SCENE 2 ── */
+    #scene-2 {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0 6vw;
+      max-width: 860px;
+      left: 0;
+      right: auto;
+    }
+
+    #scene-2 .s2-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--crema);
+      opacity: 0.5;
+      margin-bottom: 1.5rem;
+    }
+
+    #scene-2 .s2-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      color: var(--crema);
+    }
+
+    #scene-2 .s2-para {
+      font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+      line-height: 1.8;
+      opacity: 0.8;
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      color: var(--crema);
+    }
+
+    #scene-2 .s2-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.3;
+      color: var(--crema);
+      border-left: 2px solid var(--verde-claro);
+      padding-left: 1.5rem;
+      max-width: 640px;
+    }
+
+    /* ── SCENE 3 ── */
+    #scene-3 {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0 6vw;
+      max-width: 860px;
+      left: 0;
+      right: auto;
+    }
+
+    #scene-3 .s3-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      font-weight: 400;
+      color: var(--crema);
+      margin-bottom: 3rem;
+      line-height: 1.15;
+    }
+
+    .pain-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    .pain-item .pain-head {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      font-weight: 500;
+      color: var(--crema);
+      margin-bottom: 0.3rem;
+    }
+
+    .pain-item .pain-desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      opacity: 0.6;
+      font-weight: 300;
+      color: var(--crema);
+    }
+
+    #scene-3 .s3-remate {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+      font-weight: 300;
+      color: var(--crema);
+      line-height: 1.35;
+      max-width: 580px;
+      border-left: 2px solid var(--verde);
+      padding-left: 1.5rem;
+    }
+
+    /* ── SCENE 4 ── */
+    #scene-4 {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4vw;
+    }
+
+    .cards-row {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 960px;
+      width: 100%;
+    }
+
+    .glass-card {
+      background: rgba(28, 33, 24, 0.55);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(240, 234, 216, 0.18);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+      flex: 1 1 260px;
+      max-width: 300px;
+      pointer-events: all;
+    }
+
+    .glass-card.featured {
+      border-top: 2px solid var(--verde-claro);
+    }
+
+    .glass-card .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .glass-card .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--crema);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .glass-card .card-desc {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      opacity: 0.72;
+      font-weight: 300;
+      color: var(--crema);
+    }
+
+    .glass-card.featured .card-desc { opacity: 0.72; }
+
+    /* ── SCENE 5 ── */
+    #scene-5 {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0 6vw;
+      max-width: 720px;
+      left: 0;
+      right: auto;
+    }
+
+    #scene-5 .s5-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--crema);
+      opacity: 0;
+      margin-bottom: 2rem;
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--verde-claro);
+      line-height: 1;
+      min-width: 52px;
+      opacity: 0.6;
+    }
+
+    .step-body .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+      font-weight: 500;
+      color: var(--crema);
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
+    }
+
+    .step-body .step-desc {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      opacity: 0.65;
+      font-weight: 300;
+      color: var(--crema);
+      max-width: 440px;
+    }
+
+    /* ── SCENE 6 ── */
+    #scene-6 {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 4vw;
+    }
+
+    #scene-6 .s6-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 8rem);
+      font-weight: 300;
+      color: var(--crema);
+      line-height: 1;
+      margin-bottom: 1.25rem;
+    }
+
+    #scene-6 .s6-sub {
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+      line-height: 1.8;
+      opacity: 0.75;
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      color: var(--crema);
+    }
+
+    #scene-6 .cta-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      pointer-events: all;
+    }
+
+    #scene-6 .btn-wa {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #25D366;
+      color: #fff;
+      padding: 0.9rem 1.85rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    #scene-6 .btn-wa:hover { background: #1ebe5b; }
+
+    #scene-6 .btn-mail {
+      border: 1px solid rgba(240, 234, 216, 0.5);
+      color: var(--crema);
+      padding: 0.9rem 1.85rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 400;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    #scene-6 .btn-mail:hover { border-color: var(--crema); background: rgba(240,234,216,0.06); }
+
+    #scene-6 .s6-footer {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      opacity: 0.4;
+      text-transform: uppercase;
+      color: var(--crema);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      #nav { padding: 1rem 1.25rem; }
+
+      #nav .nav-links {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        inset: 0;
+        background: rgba(28,33,24,0.97);
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        z-index: 850;
+      }
+
+      #nav .nav-links.open { display: flex; }
+      #nav-toggle { display: flex; }
+
+      #scene-2, #scene-3, #scene-5 { padding: 0 5vw; max-width: 100%; }
+      #scene-1 { padding: 0 5vw 8vh; }
+
+      .cards-row { flex-direction: column; align-items: center; }
+      .glass-card { max-width: 100%; flex: unset; width: 100%; }
+      .pain-list { max-width: 100%; }
+
+      #scene-6 .s6-title { font-size: clamp(2.4rem, 13vw, 5rem); }
+      .btn-row { flex-direction: column; }
+      #scene-6 .cta-row { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- INTRO OVERLAY -->
+  <div id="intro-overlay">
+    <div id="intro-name">Diego</div>
+    <div id="intro-sub">Marchi Sale · Soluciones digitales</div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="logo">Diego</a>
+    <button id="nav-toggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#" onclick="scrollToScene(3); closeNav(); return false;">Servicios</a></li>
+      <li><a href="#" onclick="scrollToScene(4); closeNav(); return false;">Cómo trabajo</a></li>
+      <li><a href="#" onclick="scrollToScene(5); closeNav(); return false;" class="nav-cta">Hablemos</a></li>
+    </ul>
+  </nav>
+
+  <!-- VIDEOS (fixed background) -->
+  <div id="bg-dolor"></div>
+  <video id="vid-puerta"  class="video-layer" src="videos/puerta.mp4"  autoplay muted loop playsinline></video>
+  <video id="vid-entrada" class="video-layer" src="videos/entrada.mp4" autoplay muted loop playsinline></video>
+  <video id="vid-dolor"   class="video-layer" src="videos/entrada.mp4" autoplay muted loop playsinline></video>
+  <video id="vid-mesa"    class="video-layer" src="videos/mesa.mp4"    autoplay muted loop playsinline></video>
+  <video id="vid-cocina"  class="video-layer" src="videos/cocina.mp4"  autoplay muted loop playsinline></video>
+  <video id="vid-cuenta"  class="video-layer" src="videos/cuenta.mp4"  autoplay muted loop playsinline></video>
+  <div id="video-overlay"></div>
+
+  <!-- SCROLL CONTAINER (700vh) -->
+  <div id="scroll-container">
+
+    <!-- SCENE 1: LA PUERTA -->
+    <div class="text-layer" id="scene-1">
+      <span class="s1-tag">Para locales que están empezando</span>
+      <h1 class="s1-title">Tu local merece verse tan bien como cocina.</h1>
+      <p class="s1-sub">Presencia digital simple para negocios gastronómicos que están arrancando.</p>
+      <div class="btn-row">
+        <a href="#" onclick="scrollToScene(5); return false;" class="btn-primary">Quiero ver cómo quedaría mi local</a>
+        <a href="#" onclick="scrollToScene(3); return false;" class="btn-ghost">Ver ejemplos →</a>
+      </div>
+    </div>
+
+    <!-- SCENE 2: LA ENTRADA -->
+    <div class="text-layer" id="scene-2">
+      <span class="s2-label">La entrada</span>
+      <h2 class="s2-title">Trabajo en gastronomía desde hace 15 años.</h2>
+      <p class="s2-para">Conozco el rubro desde adentro — los turnos largos, los precios que cambian, los clientes que nunca llegan porque no te encuentran en Google.</p>
+      <blockquote class="s2-quote">"No soy una agencia. Soy alguien que entiende tu negocio porque lo vivió."</blockquote>
+    </div>
+
+    <!-- SCENE 3: EL DOLOR -->
+    <div class="text-layer" id="scene-3">
+      <h2 class="s3-title">Instagram no alcanza.<br>Lo sabés.</h2>
+      <div class="pain-list">
+        <div class="pain-item">
+          <div class="pain-head">No existís en Google</div>
+          <div class="pain-desc">Si alguien busca tu rubro en tu barrio, aparece la competencia. Vos no estás.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-head">Tu carta es un desastre</div>
+          <div class="pain-desc">Una foto borrosa de PDF, precios desactualizados, sin opciones para celular.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-head">"Eso es para los que tienen plata"</div>
+          <div class="pain-desc">Creés que una web o una carta digital es un lujo. No lo es.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-head">Dependés de alguien para cada cambio</div>
+          <div class="pain-desc">Querés cambiar el precio de un plato y necesitás llamar a alguien. Para siempre.</div>
+        </div>
+      </div>
+      <p class="s3-remate">No es para los que tienen plata.<br>Es para los que saben dónde invertirla.</p>
+    </div>
+
+    <!-- SCENE 4: LA MESA -->
+    <div class="text-layer" id="scene-4">
+      <div class="cards-row">
+        <div class="glass-card">
+          <span class="card-icon">📋</span>
+          <div class="card-title">Carta digital con QR</div>
+          <div class="card-desc">Tu menú online, siempre actualizado. Tus clientes escanean y ven todo desde el celular. Sin apps, sin descarga.</div>
+        </div>
+        <div class="glass-card featured">
+          <span class="card-icon">🌐</span>
+          <div class="card-title">Landing page</div>
+          <div class="card-desc">Una página que te representa. Te posiciona en Google, muestra tu propuesta y convierte visitas en clientes reales.</div>
+        </div>
+        <div class="glass-card">
+          <span class="card-icon">✨</span>
+          <div class="card-title">Combo carta + landing</div>
+          <div class="card-desc">La solución completa. Presencia online + carta digital integrada. El paquete que te pone a la par de cualquier local grande.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 5: LA COCINA -->
+    <div class="text-layer" id="scene-5">
+      <span class="s5-label">Cómo trabajo</span>
+      <div class="steps-list">
+        <div class="step-item">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <div class="step-title">Hablamos de tu local</div>
+            <div class="step-desc">Una charla de 20 minutos. Me contás qué tenés, qué te falta y qué querés lograr. Sin formularios raros.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <div class="step-title">Armo algo a tu medida</div>
+            <div class="step-desc">No uso plantillas genéricas. Diseño algo que representa a tu local — tu paleta, tu voz, tu identidad.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <div class="step-title">Te lo entrego funcionando — y te enseño a manejarlo solo.</div>
+            <div class="step-desc">Porque no querés depender de nadie, ni de mí.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 6: LA CUENTA -->
+    <div class="text-layer" id="scene-6">
+      <h2 class="s6-title">¿Arrancamos?</h2>
+      <p class="s6-sub">Contame de tu local y en 24hs te digo qué solución le viene mejor — y cuánto sale. Sin compromiso.</p>
+      <div class="cta-row">
+        <a href="https://wa.me/5491100000000" class="btn-wa" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribime por WhatsApp
+        </a>
+        <a href="mailto:diego@marchisale.com" class="btn-mail">Mandarme un mail</a>
+      </div>
+      <p class="s6-footer">Buenos Aires, Argentina · Atención 100% online</p>
+    </div>
+
+  </div><!-- /scroll-container -->
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ─── SCROLL HELPERS ─── */
+    function totalScrollable() {
+      return document.getElementById('scroll-container').offsetHeight - window.innerHeight;
+    }
+
+    // Convert percent of total scrollable distance → absolute px from top
+    function pct(p) { return totalScrollable() * (p / 100); }
+
+    // Scroll to the approximate start of a scene (0-indexed: 0=scene1..5=scene6)
+    const SCENE_STARTS = [0, 15, 30, 45, 60, 75];
+    function scrollToScene(idx) {
+      window.scrollTo({ top: pct(SCENE_STARTS[idx]), behavior: 'smooth' });
+    }
+
+    /* ─── INTRO SEQUENCE ─── */
+    let scrollEnabled = false;
+
+    function noScroll(e) { if (!scrollEnabled) e.preventDefault(); }
+    window.addEventListener('wheel',     noScroll, { passive: false });
+    window.addEventListener('touchmove', noScroll, { passive: false });
+    window.addEventListener('keydown', (e) => {
+      if (!scrollEnabled && ['ArrowUp','ArrowDown','Space','PageDown','PageUp'].includes(e.code))
+        e.preventDefault();
+    });
+
+    const overlay = document.getElementById('intro-overlay');
+
+    const introTl = gsap.timeline({ onComplete: enableScroll });
+    introTl
+      .to('#intro-name', { opacity: 1, duration: 0.9, ease: 'power2.out' })
+      .to('#intro-sub',  { opacity: 0.5, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+      .to(['#intro-name','#intro-sub'], { opacity: 0, duration: 0.8, ease: 'power2.in', delay: 1.4 })
+      .to('#vid-puerta', { opacity: 1, duration: 1, ease: 'power2.inOut' }, '-=0.4')
+      .to(overlay, { opacity: 0, duration: 0.5, ease: 'power2.in' }, '-=0.3')
+      .to('#nav', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2')
+      .set(overlay, { display: 'none' });
+
+    function enableScroll() {
+      scrollEnabled = true;
+      window.removeEventListener('wheel',     noScroll);
+      window.removeEventListener('touchmove', noScroll);
+    }
+
+    /* ─── CROSSFADE HELPER ───
+       Fades `show` in and `hide` out when scroll enters the range [startPct, endPct].
+       Reverses on scroll back. ─── */
+    function xfade(showSel, hideSel, startPct, endPct) {
+      ScrollTrigger.create({
+        trigger: '#scroll-container',
+        start: () => `top+=${pct(startPct)}px top`,
+        end:   () => `top+=${pct(endPct)}px top`,
+        onEnter:      () => { gsap.to(showSel, { opacity: 1, duration: 0.9 }); gsap.to(hideSel, { opacity: 0, duration: 0.9 }); },
+        onEnterBack:  () => { gsap.to(hideSel, { opacity: 1, duration: 0.9 }); gsap.to(showSel, { opacity: 0, duration: 0.9 }); },
+      });
+    }
+
+    /* video transitions (start / end as % of scrollable height) */
+    xfade('#vid-entrada', '#vid-puerta', 14, 17);
+
+    // dolor: vid-dolor (entrada at low opacity behind overlay) + bg-dolor in, vid-entrada out
+    ScrollTrigger.create({
+      trigger: '#scroll-container',
+      start: () => `top+=${pct(29)}px top`,
+      end:   () => `top+=${pct(32)}px top`,
+      onEnter: () => {
+        gsap.to('#vid-dolor',  { opacity: 1, duration: 0.9 });
+        gsap.to('#bg-dolor',   { opacity: 1, duration: 0.9 });
+        gsap.to('#vid-entrada',{ opacity: 0, duration: 0.9 });
+      },
+      onEnterBack: () => {
+        gsap.to('#vid-entrada',{ opacity: 1, duration: 0.9 });
+        gsap.to('#vid-dolor',  { opacity: 0, duration: 0.9 });
+        gsap.to('#bg-dolor',   { opacity: 0, duration: 0.9 });
+      },
+    });
+
+    // mesa: fade in mesa, fade out vid-dolor + bg-dolor
+    ScrollTrigger.create({
+      trigger: '#scroll-container',
+      start: () => `top+=${pct(44)}px top`,
+      end:   () => `top+=${pct(47)}px top`,
+      onEnter: () => {
+        gsap.to('#vid-mesa',  { opacity: 1, duration: 0.9 });
+        gsap.to('#vid-dolor', { opacity: 0, duration: 0.9 });
+        gsap.to('#bg-dolor',  { opacity: 0, duration: 0.9 });
+      },
+      onEnterBack: () => {
+        gsap.to('#vid-dolor', { opacity: 1, duration: 0.9 });
+        gsap.to('#bg-dolor',  { opacity: 1, duration: 0.9 });
+        gsap.to('#vid-mesa',  { opacity: 0, duration: 0.9 });
+      },
+    });
+
+    xfade('#vid-cocina', '#vid-mesa',   59, 62);
+    xfade('#vid-cuenta', '#vid-cocina', 74, 77);
+
+    /* ─── TEXT LAYER HELPER ─── */
+    function textScene(sel, inPct, outPct, animateIn) {
+      ScrollTrigger.create({
+        trigger: '#scroll-container',
+        start: () => `top+=${pct(inPct)}px top`,
+        end:   () => `top+=${pct(outPct)}px top`,
+        onEnter: () => {
+          gsap.to(sel, { opacity: 1, duration: 0.5 });
+          if (animateIn) animateIn();
+        },
+        onLeave:     () => gsap.to(sel, { opacity: 0, duration: 0.5 }),
+        onEnterBack: () => gsap.to(sel, { opacity: 1, duration: 0.5 }),
+        onLeaveBack: () => gsap.to(sel, { opacity: 0, duration: 0.5 }),
+      });
+    }
+
+    /* ─── SCENE 1 ─── */
+    textScene('#scene-1', 0.5, 13.5, null);
+
+    /* ─── SCENE 2 ─── */
+    gsap.set(['#scene-2 .s2-label','#scene-2 .s2-title','#scene-2 .s2-para','#scene-2 .s2-quote'],
+      { opacity: 0, y: 24 });
+
+    let s2Played = false;
+    textScene('#scene-2', 16, 29, () => {
+      if (s2Played) return;
+      s2Played = true;
+      gsap.to(['#scene-2 .s2-label','#scene-2 .s2-title','#scene-2 .s2-para'],
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.25, ease: 'power2.out' });
+      gsap.to('#scene-2 .s2-quote',
+        { opacity: 1, y: 0, duration: 0.8, delay: 0.9, ease: 'power2.out' });
+    });
+
+    /* ─── SCENE 3 ─── */
+    gsap.set(['#scene-3 .s3-title','#scene-3 .s3-remate'], { opacity: 0, y: 20 });
+    gsap.set('#scene-3 .pain-item', { opacity: 0, x: -20 });
+
+    let s3Played = false;
+    textScene('#scene-3', 31, 44, () => {
+      if (s3Played) return;
+      s3Played = true;
+      gsap.to('#scene-3 .s3-title', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' });
+      gsap.to('#scene-3 .pain-item',
+        { opacity: 1, x: 0, duration: 0.6, stagger: 0.3, delay: 0.4, ease: 'power2.out' });
+      gsap.to('#scene-3 .s3-remate',
+        { opacity: 1, y: 0, duration: 0.8, delay: 1.8, ease: 'power2.out' });
+    });
+
+    /* hide video overlay during dolor (black bg handles darkness) */
+    ScrollTrigger.create({
+      trigger: '#scroll-container',
+      start: () => `top+=${pct(29)}px top`,
+      end:   () => `top+=${pct(45)}px top`,
+      onEnter:     () => gsap.to('#video-overlay', { opacity: 0, duration: 0.5 }),
+      onLeave:     () => gsap.to('#video-overlay', { opacity: 1, duration: 0.5 }),
+      onEnterBack: () => gsap.to('#video-overlay', { opacity: 0, duration: 0.5 }),
+      onLeaveBack: () => gsap.to('#video-overlay', { opacity: 1, duration: 0.5 }),
+    });
+
+    /* ─── SCENE 4 ─── */
+    gsap.set('#scene-4 .glass-card', { opacity: 0, y: 30 });
+
+    let s4Played = false;
+    textScene('#scene-4', 46, 59, () => {
+      if (s4Played) return;
+      s4Played = true;
+      gsap.to('#scene-4 .glass-card',
+        { opacity: 1, y: 0, duration: 0.65, stagger: 0.25, ease: 'power2.out' });
+    });
+
+    /* ─── SCENE 5 ─── */
+    gsap.set(['#scene-5 .s5-label','#scene-5 .step-item'], { opacity: 0, y: 20 });
+
+    let s5Played = false;
+    textScene('#scene-5', 61, 75, () => {
+      if (s5Played) return;
+      s5Played = true;
+      gsap.to('#scene-5 .s5-label', { opacity: 0.5, y: 0, duration: 0.5 });
+      gsap.to('#scene-5 .step-item',
+        { opacity: 1, y: 0, duration: 0.65, stagger: 0.3, delay: 0.3, ease: 'power2.out' });
+    });
+
+    /* ─── SCENE 6 ─── */
+    gsap.set(['#scene-6 .s6-title','#scene-6 .s6-sub','#scene-6 .cta-row','#scene-6 .s6-footer'],
+      { opacity: 0, y: 20 });
+
+    let s6Played = false;
+    textScene('#scene-6', 74, 99.5, () => {
+      if (s6Played) return;
+      s6Played = true;
+      gsap.to(['#scene-6 .s6-title','#scene-6 .s6-sub','#scene-6 .cta-row','#scene-6 .s6-footer'],
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.2, ease: 'power2.out' });
+    });
+
+    /* ─── NAV: hamburger ─── */
+    const toggle = document.getElementById('nav-toggle');
+    const links  = document.getElementById('nav-links');
+
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('open');
+      const [b1, b2, b3] = toggle.querySelectorAll('span');
+      if (links.classList.contains('open')) {
+        gsap.to(b1, { rotation: 45,  y: 7,  duration: 0.3 });
+        gsap.to(b2, { opacity: 0,          duration: 0.2 });
+        gsap.to(b3, { rotation: -45, y: -7, duration: 0.3 });
+      } else {
+        closeNav();
+      }
+    });
+
+    function closeNav() {
+      links.classList.remove('open');
+      const [b1, b2, b3] = toggle.querySelectorAll('span');
+      gsap.to(b1, { rotation: 0, y: 0, duration: 0.3 });
+      gsap.to(b2, { opacity: 1,         duration: 0.2 });
+      gsap.to(b3, { rotation: 0, y: 0, duration: 0.3 });
+    }
+
+    /* ─── RESIZE ─── */
+    window.addEventListener('resize', () => ScrollTrigger.refresh());
+  </script>
+</body>
+</html>
