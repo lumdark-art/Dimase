@@ -955,7 +955,8 @@
     // 3=scene4(mesa)   4=scene5(cocina)  5=scene6(portfolio) 6=scene7(cuenta)
     const SCENE_STARTS = [0, 14, 28, 43, 57, 70, 87];
     function scrollToScene(idx) {
-      window.scrollTo({ top: pct(SCENE_STARTS[idx]), behavior: 'smooth' });
+      window.scrollTo(0, pct(SCENE_STARTS[idx]) + 2);
+      ScrollTrigger.update();
     }
 
     /* ─── INTRO SEQUENCE ─── */
