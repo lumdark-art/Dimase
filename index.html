@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iego Marchi Sale · Soluciones digitales para gastronomía</title>
+  <title>Dimase Marchi Sale · Soluciones digitales para gastronomía</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -560,6 +560,166 @@
       color: var(--crema);
     }
 
+    /* ── SCENE 6: PORTFOLIO ── */
+    #scene-6 {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0 8vw;
+    }
+
+    #scene-6::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 12, 8, 0.55);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: -1;
+    }
+
+    #scene-6 .s6p-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crema);
+      opacity: 0.55;
+      margin-bottom: 0.75rem;
+    }
+
+    #scene-6 .s6p-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3.8vw, 3.4rem);
+      font-weight: 300;
+      color: var(--crema);
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+    }
+
+    #scene-6 .s6p-para {
+      font-size: clamp(0.8rem, 1.15vw, 0.95rem);
+      line-height: 1.7;
+      opacity: 0.65;
+      max-width: 580px;
+      font-weight: 300;
+      color: var(--crema);
+      margin-bottom: 1.75rem;
+    }
+
+    .portfolio-row {
+      display: flex;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 880px;
+      pointer-events: all;
+    }
+
+    .portfolio-card {
+      flex: 1;
+      background: rgba(22, 26, 18, 0.82);
+      border: 1px solid rgba(180, 170, 130, 0.22);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 6px;
+      padding: 1.4rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .pcard-label {
+      font-size: 0.67rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--crema);
+      opacity: 0.5;
+    }
+
+    .pcard-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 2.5vw, 2.4rem);
+      font-weight: 400;
+      color: var(--crema);
+      line-height: 1;
+    }
+
+    .pcard-sub {
+      font-size: 0.76rem;
+      color: var(--crema);
+      opacity: 0.5;
+      font-weight: 300;
+      margin-bottom: 0.15rem;
+    }
+
+    .pcard-desc {
+      font-size: 0.83rem;
+      line-height: 1.65;
+      color: var(--crema);
+      opacity: 0.72;
+      font-weight: 300;
+    }
+
+    .pcard-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0.1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .pcard-bullets li {
+      font-size: 0.88rem;
+      color: var(--crema);
+      opacity: 0.7;
+      font-weight: 300;
+      padding-left: 0.9rem;
+      position: relative;
+    }
+
+    .pcard-bullets li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+    }
+
+    .pcard-btn {
+      display: inline-block;
+      margin-top: 0.4rem;
+      border: 1px solid rgba(240, 234, 216, 0.38);
+      color: var(--crema);
+      padding: 0.55rem 1.1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 400;
+      transition: border-color 0.2s, background 0.2s;
+      align-self: flex-start;
+    }
+
+    .pcard-btn:hover { border-color: var(--crema); background: rgba(240,234,216,0.06); }
+
+    /* imagen full-width en cards de portfolio */
+    .pcard-img {
+      margin: -1.4rem -1.6rem 0.85rem -1.6rem;
+      border-radius: 5px 5px 0 0;
+      overflow: hidden;
+      background: #0d0d0d;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    .pcard-img img {
+      width: 100%;
+      height: 100%;
+      min-height: 256px;
+      object-fit: contain;
+      display: block;
+    }
+
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       #nav { padding: 1rem 1.25rem; }
@@ -579,12 +739,14 @@
       #nav .nav-links.open { display: flex; }
       #nav-toggle { display: flex; }
 
-      #scene-2, #scene-3, #scene-5 { padding: 0 5vw; max-width: 100%; }
+      #scene-2, #scene-3, #scene-5, #scene-6 { padding: 0 5vw; max-width: 100%; }
       #scene-1 { padding: 0 5vw 8vh; }
 
       .cards-row { flex-direction: column; align-items: center; }
       .glass-card { max-width: 100%; flex: unset; width: 100%; }
       .pain-list { max-width: 100%; }
+      .portfolio-row { flex-direction: column; }
+      .portfolio-card { max-width: 100%; }
 
       #scene-7 .s6-title { font-size: clamp(2.4rem, 13vw, 5rem); }
       .btn-row { flex-direction: column; }
@@ -596,13 +758,13 @@
 
   <!-- INTRO OVERLAY -->
   <div id="intro-overlay">
-    <div id="intro-name">Iego</div>
-    <div id="intro-sub">Marchi Sale · Soluciones digitales</div>
+    <div id="intro-name">Dimase</div>
+    <div id="intro-sub">Digital simple para locales gastronómicos que empiezan</div>
   </div>
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#" class="logo">Iego</a>
+    <a href="#" class="logo">Dimase</a>
     <button id="nav-toggle" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
@@ -630,8 +792,8 @@
     <!-- SCENE 1: LA PUERTA -->
     <div class="text-layer" id="scene-1">
       <span class="s1-tag">Para locales que están empezando</span>
-      <h1 class="s1-title">Tu local merece verse tan bien como cocina.</h1>
-      <p class="s1-sub">Presencia digital simple para negocios gastronómicos que están arrancando.</p>
+      <h1 class="s1-title">Digital simple para negocios gastronómicos reales.</h1>
+      <p class="s1-sub">Carta digital, presencia web y herramientas simples para locales que están empezando o quieren ordenarse sin gastar una fortuna.</p>
       <div class="btn-row">
         <a href="#" onclick="scrollToScene(6); return false;" class="btn-primary">Quiero ver cómo quedaría mi local</a>
         <a href="#" onclick="scrollToScene(3); return false;" class="btn-ghost">Ver ejemplos →</a>
@@ -640,10 +802,10 @@
 
     <!-- SCENE 2: LA ENTRADA -->
     <div class="text-layer" id="scene-2">
-      <span class="s2-label">La entrada</span>
       <h2 class="s2-title">Trabajo en gastronomía desde hace 15 años.</h2>
       <p class="s2-para">Conozco el rubro desde adentro — los turnos largos, los precios que cambian, los clientes que nunca llegan porque no te encuentran en Google.</p>
-      <blockquote class="s2-quote">"No soy una agencia. Soy alguien que entiende tu negocio porque lo vivió."</blockquote>
+      <blockquote class="s2-quote">No soy una agencia. Soy alguien que entiende tu negocio porque lo vivió.</blockquote>
+      <p class="s2-para">Por eso sé exactamente qué necesita tu local — y qué no.</p>
     </div>
 
     <!-- SCENE 3: EL DOLOR -->
@@ -651,20 +813,20 @@
       <h2 class="s3-title">Instagram no alcanza.<br>Lo sabés.</h2>
       <div class="pain-list">
         <div class="pain-item">
-          <div class="pain-head">No existís en Google</div>
-          <div class="pain-desc">Si alguien busca tu rubro en tu barrio, aparece la competencia. Vos no estás.</div>
+          <div class="pain-head">La competencia aparece primero que vos</div>
+          <div class="pain-desc">Alguien busca dónde comer cerca, aparece la competencia. Vos no estás. Y ese cliente se va a otro lado sin saber que existís.</div>
         </div>
         <div class="pain-item">
-          <div class="pain-head">Tu carta es un desastre</div>
-          <div class="pain-desc">Una foto borrosa de PDF, precios desactualizados, sin opciones para celular.</div>
+          <div class="pain-head">Tus precios cambian y actualizar es un dolor de cabeza</div>
+          <div class="pain-desc">Cada vez que cambiás algo tenés que pedirle ayuda a alguien, mandar una foto nueva o editar un PDF. Un gasto de tiempo que se repite.</div>
         </div>
         <div class="pain-item">
-          <div class="pain-head">"Eso es para los que tienen plata"</div>
-          <div class="pain-desc">Creés que una web o una carta digital es un lujo. No lo es.</div>
+          <div class="pain-head">Creés que para tener presencia digital primero tenés que crecer</div>
+          <div class="pain-desc">La mayoría espera tener el local consolidado para recién pensar en una web o una carta digital. Pero es exactamente al revés — la presencia digital es lo que te ayuda a llegar a ese punto.</div>
         </div>
         <div class="pain-item">
-          <div class="pain-head">Dependés de alguien para cada cambio</div>
-          <div class="pain-desc">Querés cambiar el precio de un plato y necesitás llamar a alguien. Para siempre.</div>
+          <div class="pain-head">Las reservas y consultas se pierden en el chat</div>
+          <div class="pain-desc">Te llegan mensajes por Instagram, por WhatsApp, por todos lados. Sin orden, sin confirmación automática, sin registro. Alguno siempre se cae.</div>
         </div>
       </div>
       <p class="s3-remate">No es para los que tienen plata.<br>Es para los que saben dónde invertirla.</p>
@@ -685,7 +847,7 @@
         </div>
         <div class="glass-card">
           <span class="card-icon">✨</span>
-          <div class="card-title">Combo carta + landing</div>
+          <div class="card-title">Presencia completa</div>
           <div class="card-desc">La solución completa. Presencia online + carta digital integrada. El paquete que te pone a la par de cualquier local grande.</div>
         </div>
       </div>
@@ -719,13 +881,47 @@
       </div>
     </div>
 
-    <!-- SCENE 6: LA VENTANA (transición cinematográfica, sin texto) -->
-    <!-- el video ventana.mp4 es el fondo, sin text-layer -->
+    <!-- SCENE 6: LA VENTANA — PORTFOLIO -->
+    <div class="text-layer" id="scene-6">
+      <span class="s6p-label">Ejemplos reales</span>
+      <h2 class="s6p-title">No son plantillas.<br>Son soluciones hechas para negocios reales.</h2>
+      <p class="s6p-para">Cada local trabaja distinto. Por eso no uso plantillas: adapto cada solución a lo que el negocio necesita hoy.</p>
+      <div class="portfolio-row">
+        <div class="portfolio-card">
+          <div class="pcard-img">
+            <img src="imagenes/secretito-mockup.png" alt="Secretito mockup">
+          </div>
+          <span class="pcard-label">Presencia web</span>
+          <div class="pcard-title">Secretito</div>
+          <div class="pcard-desc">Landing simple para ordenar la propuesta del local y llevar al cliente a la carta o al contacto.</div>
+          <ul class="pcard-bullets">
+            <li>Información clara</li>
+            <li>Acceso rápido</li>
+            <li>Mejor presentación</li>
+          </ul>
+          <a href="https://www.parrisecretito.com.ar/" class="pcard-btn" target="_blank" rel="noopener">Ver landing</a>
+        </div>
+        <div class="portfolio-card">
+          <div class="pcard-img">
+            <img src="imagenes/verdetostado-mockup.png" alt="Verde Tostado mockup">
+          </div>
+          <span class="pcard-label">Carta digital editable</span>
+          <div class="pcard-title">Verde Tostado</div>
+          <div class="pcard-desc">Carta online editable para que el dueño actualice productos y precios sin depender de nadie.</div>
+          <ul class="pcard-bullets">
+            <li>Menú actualizado</li>
+            <li>Pensada para celular</li>
+            <li>Más control para el dueño</li>
+          </ul>
+          <a href="https://carta-digital-ruddy.vercel.app/verde-tostado" class="pcard-btn" target="_blank" rel="noopener">Ver carta digital</a>
+        </div>
+      </div>
+    </div>
 
     <!-- SCENE 7: LA CUENTA -->
     <div class="text-layer" id="scene-7">
       <h2 class="s6-title">¿Arrancamos?</h2>
-      <p class="s6-sub">Contame de tu local y en 24hs te digo qué solución le viene mejor — y cuánto sale. Sin compromiso.</p>
+      <p class="s6-sub">Contame qué necesitás y vemos una opción simple para tu local. Sin compromiso.</p>
       <div class="cta-row">
         <a href="https://wa.me/5491100000000" class="btn-wa" target="_blank" rel="noopener">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -749,8 +945,8 @@
     function pct(p) { return totalScrollable() * (p / 100); }
 
     // 0=scene1(puerta) 1=scene2(entrada) 2=scene3(dolor)
-    // 3=scene4(mesa)   4=scene5(cocina)  5=scene6(ventana)  6=scene7(cuenta)
-    const SCENE_STARTS = [0, 14, 28, 43, 57, 69, 78];
+    // 3=scene4(mesa)   4=scene5(cocina)  5=scene6(portfolio) 6=scene7(cuenta)
+    const SCENE_STARTS = [0, 14, 28, 43, 57, 70, 87];
     function scrollToScene(idx) {
       window.scrollTo({ top: pct(SCENE_STARTS[idx]), behavior: 'smooth' });
     }
@@ -858,7 +1054,7 @@
 
     xfade('#vid-cocina',  '#vid-mesa',    54, 57);
     xfade('#vid-ventana', '#vid-cocina',  66, 69);
-    xfade('#vid-cuenta',  '#vid-ventana', 77, 80);
+    xfade('#vid-cuenta',  '#vid-ventana', 83, 86);
 
     /* ─── TEXT LAYER HELPER ─── */
     function textScene(sel, inPct, outPct, animateIn) {
@@ -942,14 +1138,26 @@
         { opacity: 1, y: 0, duration: 0.65, stagger: 0.3, delay: 0.3, ease: 'power2.out' });
     });
 
-    /* ─── SCENE 6: ventana — solo video, sin texto ─── */
+    /* ─── SCENE 6: ventana / portfolio ─── */
+    gsap.set(['#scene-6 .s6p-label','#scene-6 .s6p-title','#scene-6 .s6p-para'], { opacity: 0, y: 20 });
+    gsap.set('#scene-6 .portfolio-card', { opacity: 0, y: 30 });
+
+    let s6Played = false;
+    textScene('#scene-6', 70, 82, () => {
+      if (s6Played) return;
+      s6Played = true;
+      gsap.to(['#scene-6 .s6p-label','#scene-6 .s6p-title','#scene-6 .s6p-para'],
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.2, ease: 'power2.out' });
+      gsap.to('#scene-6 .portfolio-card',
+        { opacity: 1, y: 0, duration: 0.65, stagger: 0.25, delay: 0.5, ease: 'power2.out' });
+    });
 
     /* ─── SCENE 7: cuenta / ¿Arrancamos? ─── */
     gsap.set(['#scene-7 .s6-title','#scene-7 .s6-sub','#scene-7 .cta-row','#scene-7 .s6-footer'],
       { opacity: 0, y: 20 });
 
     let s7Played = false;
-    textScene('#scene-7', 79, 99.5, () => {
+    textScene('#scene-7', 87, 99.5, () => {
       if (s7Played) return;
       s7Played = true;
       gsap.to(['#scene-7 .s6-title','#scene-7 .s6-sub','#scene-7 .cta-row','#scene-7 .s6-footer'],
@@ -982,6 +1190,10 @@
 
     /* ─── RESIZE ─── */
     window.addEventListener('resize', () => ScrollTrigger.refresh());
+
+    window.onbeforeunload = function() {
+      window.scrollTo(0, 0);
+    }
   </script>
 </body>
 </html>
