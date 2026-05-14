@@ -726,54 +726,6 @@
       display: block;
     }
 
-    /* ── MOBILE: layout de secciones con videos position absolute ── */
-    @media (max-width: 768px) {
-      /* scroll container: altura automática (las secciones la definen) */
-      #scroll-container { height: auto; }
-
-      /* cada sección es un bloque full-height con su propio video de fondo */
-      .scene-section {
-        position: relative;
-        overflow: hidden;
-        min-height: 100svh;
-      }
-
-      /* overlay oscuro por sección vía pseudo-elemento */
-      .scene-section::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba(28, 33, 24, 0.45);
-        z-index: 2;
-        pointer-events: none;
-      }
-
-      /* sección dolor: overlay más oscuro */
-      #section-3::after { background: rgba(0, 0, 0, 0.78); }
-
-      /* videos: position absolute llenando la sección */
-      .video-layer {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 1 !important;
-        z-index: 1;
-      }
-
-      /* #bg-dolor y #video-overlay: reemplazados por pseudo-elementos de sección */
-      #bg-dolor, #video-overlay { display: none; }
-
-      /* text layers: position absolute dentro de la sección, siempre visibles */
-      .text-layer {
-        position: absolute;
-        inset: 0;
-        opacity: 1 !important;
-        z-index: 3;
-      }
-    }
-
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       #nav { padding: 1rem 1.25rem; }
@@ -824,7 +776,6 @@
       #scene-3 .s3-title { font-size: clamp(1.3rem, 5.5vw, 1.9rem); margin-bottom: 1rem; }
       #scene-3 .s3-remate { font-size: clamp(0.9rem, 3.8vw, 1.25rem); }
       #scene-6 .s6p-title { font-size: clamp(1.3rem, 5vw, 1.9rem); margin-bottom: 0.4rem; }
-      #scene-5 .s5-label { opacity: 0.5; }
       #scene-6 .s6p-para { margin-bottom: 1rem; }
 
       .cards-row { flex-direction: column; align-items: center; gap: 0.75rem; }
@@ -875,183 +826,167 @@
     </ul>
   </nav>
 
-  <!-- video-overlay (desktop: fixed sobre todos los videos; mobile: oculto) -->
+  <!-- VIDEOS (fixed background) -->
+  <div id="bg-dolor"></div>
+  <video id="vid-puerta"  class="video-layer" src="videos/puerta.mp4"  autoplay muted loop playsinline></video>
+  <video id="vid-entrada" class="video-layer" src="videos/entrada.mp4" autoplay muted loop playsinline></video>
+  <video id="vid-dolor"   class="video-layer" src="videos/entrada.mp4" autoplay muted loop playsinline></video>
+  <video id="vid-mesa"    class="video-layer" src="videos/mesa.mp4"    autoplay muted loop playsinline></video>
+  <video id="vid-cocina"  class="video-layer" src="videos/cocina.mp4"  autoplay muted loop playsinline></video>
+  <video id="vid-ventana" class="video-layer" src="videos/ventana.mp4" autoplay muted loop playsinline></video>
+  <video id="vid-cuenta"  class="video-layer" src="videos/cuenta.mp4"  autoplay muted loop playsinline></video>
   <div id="video-overlay"></div>
 
-  <!-- SCROLL CONTAINER (700vh desktop / auto mobile) -->
+  <!-- SCROLL CONTAINER (700vh) -->
   <div id="scroll-container">
 
     <!-- SCENE 1: LA PUERTA -->
-    <section class="scene-section" id="section-1">
-      <video id="vid-puerta" class="video-layer" src="videos/puerta.mp4" autoplay muted loop playsinline></video>
-      <div class="text-layer" id="scene-1">
-        <span class="s1-tag">Para locales que están empezando</span>
-        <h1 class="s1-title">Digital simple para negocios gastronómicos reales.</h1>
-        <p class="s1-sub">Carta digital, presencia web y herramientas simples para locales que están empezando o quieren ordenarse sin gastar una fortuna.</p>
-        <div class="btn-row">
-          <a href="#" onclick="scrollToScene(6); return false;" class="btn-primary">Quiero ver cómo quedaría mi local</a>
-          <a href="#" onclick="scrollToScene(3); return false;" class="btn-ghost">Ver ejemplos →</a>
-        </div>
+    <div class="text-layer" id="scene-1">
+      <span class="s1-tag">Para locales que están empezando</span>
+      <h1 class="s1-title">Digital simple para negocios gastronómicos reales.</h1>
+      <p class="s1-sub">Carta digital, presencia web y herramientas simples para locales que están empezando o quieren ordenarse sin gastar una fortuna.</p>
+      <div class="btn-row">
+        <a href="#" onclick="scrollToScene(6); return false;" class="btn-primary">Quiero ver cómo quedaría mi local</a>
+        <a href="#" onclick="scrollToScene(3); return false;" class="btn-ghost">Ver ejemplos →</a>
       </div>
-    </section>
+    </div>
 
     <!-- SCENE 2: LA ENTRADA -->
-    <section class="scene-section" id="section-2">
-      <video id="vid-entrada" class="video-layer" src="videos/entrada.mp4" autoplay muted loop playsinline></video>
-      <div class="text-layer" id="scene-2">
-        <h2 class="s2-title">Trabajo en gastronomía desde hace 15 años.</h2>
-        <p class="s2-para">Conozco el rubro desde adentro — los turnos largos, los precios que cambian, los clientes que nunca llegan porque no te encuentran en Google.</p>
-        <blockquote class="s2-quote">No soy una agencia. Soy alguien que entiende tu negocio porque lo vivió.</blockquote>
-        <p class="s2-para">Por eso sé exactamente qué necesita tu local — y qué no.</p>
-      </div>
-    </section>
+    <div class="text-layer" id="scene-2">
+      <h2 class="s2-title">Trabajo en gastronomía desde hace 15 años.</h2>
+      <p class="s2-para">Conozco el rubro desde adentro — los turnos largos, los precios que cambian, los clientes que nunca llegan porque no te encuentran en Google.</p>
+      <blockquote class="s2-quote">No soy una agencia. Soy alguien que entiende tu negocio porque lo vivió.</blockquote>
+      <p class="s2-para">Por eso sé exactamente qué necesita tu local — y qué no.</p>
+    </div>
 
     <!-- SCENE 3: EL DOLOR -->
-    <section class="scene-section" id="section-3">
-      <div id="bg-dolor"></div>
-      <video id="vid-dolor" class="video-layer" src="videos/entrada.mp4" autoplay muted loop playsinline></video>
-      <div class="text-layer" id="scene-3">
-        <h2 class="s3-title">Instagram no alcanza.<br>Lo sabés.</h2>
-        <div class="pain-list">
-          <div class="pain-item">
-            <div class="pain-head">La competencia aparece primero que vos</div>
-            <div class="pain-desc">Alguien busca dónde comer cerca, aparece la competencia. Vos no estás. Y ese cliente se va a otro lado sin saber que existís.</div>
-          </div>
-          <div class="pain-item">
-            <div class="pain-head">Tus precios cambian y actualizar es un dolor de cabeza</div>
-            <div class="pain-desc">Cada vez que cambiás algo tenés que pedirle ayuda a alguien, mandar una foto nueva o editar un PDF. Un gasto de tiempo que se repite.</div>
-          </div>
-          <div class="pain-item">
-            <div class="pain-head">Creés que para tener presencia digital primero tenés que crecer</div>
-            <div class="pain-desc">La mayoría espera tener el local consolidado para recién pensar en una web o una carta digital. Pero es exactamente al revés — la presencia digital es lo que te ayuda a llegar a ese punto.</div>
-          </div>
-          <div class="pain-item">
-            <div class="pain-head">Las reservas y consultas se pierden en el chat</div>
-            <div class="pain-desc">Te llegan mensajes por Instagram, por WhatsApp, por todos lados. Sin orden, sin confirmación automática, sin registro. Alguno siempre se cae.</div>
-          </div>
+    <div class="text-layer" id="scene-3">
+      <h2 class="s3-title">Instagram no alcanza.<br>Lo sabés.</h2>
+      <div class="pain-list">
+        <div class="pain-item">
+          <div class="pain-head">La competencia aparece primero que vos</div>
+          <div class="pain-desc">Alguien busca dónde comer cerca, aparece la competencia. Vos no estás. Y ese cliente se va a otro lado sin saber que existís.</div>
         </div>
-        <p class="s3-remate">No es para los que tienen plata.<br>Es para los que saben dónde invertirla.</p>
+        <div class="pain-item">
+          <div class="pain-head">Tus precios cambian y actualizar es un dolor de cabeza</div>
+          <div class="pain-desc">Cada vez que cambiás algo tenés que pedirle ayuda a alguien, mandar una foto nueva o editar un PDF. Un gasto de tiempo que se repite.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-head">Creés que para tener presencia digital primero tenés que crecer</div>
+          <div class="pain-desc">La mayoría espera tener el local consolidado para recién pensar en una web o una carta digital. Pero es exactamente al revés — la presencia digital es lo que te ayuda a llegar a ese punto.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-head">Las reservas y consultas se pierden en el chat</div>
+          <div class="pain-desc">Te llegan mensajes por Instagram, por WhatsApp, por todos lados. Sin orden, sin confirmación automática, sin registro. Alguno siempre se cae.</div>
+        </div>
       </div>
-    </section>
+      <p class="s3-remate">No es para los que tienen plata.<br>Es para los que saben dónde invertirla.</p>
+    </div>
 
     <!-- SCENE 4: LA MESA -->
-    <section class="scene-section" id="section-4">
-      <video id="vid-mesa" class="video-layer" src="videos/mesa.mp4" autoplay muted loop playsinline></video>
-      <div class="text-layer" id="scene-4">
-        <div class="cards-row">
-          <div class="glass-card">
-            <span class="card-icon">01</span>
-            <div class="card-title">Carta digital con QR</div>
-            <div class="card-desc">Tu menú online, siempre actualizado. Tus clientes escanean y ven todo desde el celular. Sin apps, sin descarga.</div>
-          </div>
-          <div class="glass-card featured">
-            <span class="card-icon">02</span>
-            <div class="card-title">Landing page</div>
-            <div class="card-desc">Una página que te representa. Te posiciona en Google, muestra tu propuesta y convierte visitas en clientes reales.</div>
-          </div>
-          <div class="glass-card">
-            <span class="card-icon">03</span>
-            <div class="card-title">Presencia completa</div>
-            <div class="card-desc">La solución completa. Presencia online + carta digital integrada. El paquete que te pone a la par de cualquier local grande.</div>
-          </div>
+    <div class="text-layer" id="scene-4">
+      <div class="cards-row">
+        <div class="glass-card">
+          <span class="card-icon">01</span>
+          <div class="card-title">Carta digital con QR</div>
+          <div class="card-desc">Tu menú online, siempre actualizado. Tus clientes escanean y ven todo desde el celular. Sin apps, sin descarga.</div>
+        </div>
+        <div class="glass-card featured">
+          <span class="card-icon">02</span>
+          <div class="card-title">Landing page</div>
+          <div class="card-desc">Una página que te representa. Te posiciona en Google, muestra tu propuesta y convierte visitas en clientes reales.</div>
+        </div>
+        <div class="glass-card">
+          <span class="card-icon">03</span>
+          <div class="card-title">Presencia completa</div>
+          <div class="card-desc">La solución completa. Presencia online + carta digital integrada. El paquete que te pone a la par de cualquier local grande.</div>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- SCENE 5: LA COCINA -->
-    <section class="scene-section" id="section-5">
-      <video id="vid-cocina" class="video-layer" src="videos/cocina.mp4" autoplay muted loop playsinline></video>
-      <div class="text-layer" id="scene-5">
-        <span class="s5-label">Cómo trabajo</span>
-        <div class="steps-list">
-          <div class="step-item">
-            <span class="step-num">1</span>
-            <div class="step-body">
-              <div class="step-title">Hablamos de tu local</div>
-              <div class="step-desc">Una charla de 20 minutos. Me contás qué tenés, qué te falta y qué querés lograr. Sin formularios raros.</div>
-            </div>
+    <div class="text-layer" id="scene-5">
+      <span class="s5-label">Cómo trabajo</span>
+      <div class="steps-list">
+        <div class="step-item">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <div class="step-title">Hablamos de tu local</div>
+            <div class="step-desc">Una charla de 20 minutos. Me contás qué tenés, qué te falta y qué querés lograr. Sin formularios raros.</div>
           </div>
-          <div class="step-item">
-            <span class="step-num">2</span>
-            <div class="step-body">
-              <div class="step-title">Armo algo a tu medida</div>
-              <div class="step-desc">No uso plantillas genéricas. Diseño algo que representa a tu local — tu paleta, tu voz, tu identidad.</div>
-            </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <div class="step-title">Armo algo a tu medida</div>
+            <div class="step-desc">No uso plantillas genéricas. Diseño algo que representa a tu local — tu paleta, tu voz, tu identidad.</div>
           </div>
-          <div class="step-item">
-            <span class="step-num">3</span>
-            <div class="step-body">
-              <div class="step-title">Te lo entrego funcionando — y te enseño a manejarlo solo.</div>
-              <div class="step-desc">Porque no querés depender de nadie, ni de mí.</div>
-            </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <div class="step-title">Te lo entrego funcionando — y te enseño a manejarlo solo.</div>
+            <div class="step-desc">Porque no querés depender de nadie, ni de mí.</div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- SCENE 6: LA VENTANA — PORTFOLIO -->
-    <section class="scene-section" id="section-6">
-      <video id="vid-ventana" class="video-layer" src="videos/ventana.mp4" autoplay muted loop playsinline></video>
-      <div class="text-layer" id="scene-6">
-        <span class="s6p-label">Ejemplos reales</span>
-        <h2 class="s6p-title">No son plantillas.<br>Son soluciones hechas para negocios reales.</h2>
-        <p class="s6p-para">Cada local trabaja distinto. Por eso no uso plantillas: adapto cada solución a lo que el negocio necesita hoy.</p>
-        <div class="portfolio-row">
-          <div class="portfolio-card">
-            <div class="pcard-img">
-              <img src="imagenes/secretito-mockup.png" alt="Secretito mockup">
-            </div>
-            <span class="pcard-label">Presencia web</span>
-            <div class="pcard-title">Secretito</div>
-            <div class="pcard-desc">Landing simple para ordenar la propuesta del local y llevar al cliente a la carta o al contacto.</div>
-            <ul class="pcard-bullets">
-              <li>Información clara</li>
-              <li>Acceso rápido</li>
-              <li>Mejor presentación</li>
-            </ul>
-            <a href="https://www.parrisecretito.com.ar/" class="pcard-btn" target="_blank" rel="noopener">Ver landing</a>
+    <div class="text-layer" id="scene-6">
+      <span class="s6p-label">Ejemplos reales</span>
+      <h2 class="s6p-title">No son plantillas.<br>Son soluciones hechas para negocios reales.</h2>
+      <p class="s6p-para">Cada local trabaja distinto. Por eso no uso plantillas: adapto cada solución a lo que el negocio necesita hoy.</p>
+      <div class="portfolio-row">
+        <div class="portfolio-card">
+          <div class="pcard-img">
+            <img src="imagenes/secretito-mockup.png" alt="Secretito mockup">
           </div>
-          <div class="portfolio-card">
-            <div class="pcard-img">
-              <img src="imagenes/verdetostado-mockup.png" alt="Verde Tostado mockup">
-            </div>
-            <span class="pcard-label">Carta digital editable</span>
-            <div class="pcard-title">Verde Tostado</div>
-            <div class="pcard-desc">Carta online editable para que el dueño actualice productos y precios sin depender de nadie.</div>
-            <ul class="pcard-bullets">
-              <li>Menú actualizado</li>
-              <li>Pensada para celular</li>
-              <li>Más control para el dueño</li>
-            </ul>
-            <a href="https://carta-digital-ruddy.vercel.app/verde-tostado" class="pcard-btn" target="_blank" rel="noopener">Ver carta digital</a>
+          <span class="pcard-label">Presencia web</span>
+          <div class="pcard-title">Secretito</div>
+          <div class="pcard-desc">Landing simple para ordenar la propuesta del local y llevar al cliente a la carta o al contacto.</div>
+          <ul class="pcard-bullets">
+            <li>Información clara</li>
+            <li>Acceso rápido</li>
+            <li>Mejor presentación</li>
+          </ul>
+          <a href="https://www.parrisecretito.com.ar/" class="pcard-btn" target="_blank" rel="noopener">Ver landing</a>
+        </div>
+        <div class="portfolio-card">
+          <div class="pcard-img">
+            <img src="imagenes/verdetostado-mockup.png" alt="Verde Tostado mockup">
           </div>
+          <span class="pcard-label">Carta digital editable</span>
+          <div class="pcard-title">Verde Tostado</div>
+          <div class="pcard-desc">Carta online editable para que el dueño actualice productos y precios sin depender de nadie.</div>
+          <ul class="pcard-bullets">
+            <li>Menú actualizado</li>
+            <li>Pensada para celular</li>
+            <li>Más control para el dueño</li>
+          </ul>
+          <a href="https://carta-digital-ruddy.vercel.app/verde-tostado" class="pcard-btn" target="_blank" rel="noopener">Ver carta digital</a>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- SCENE 7: LA CUENTA -->
-    <section class="scene-section" id="section-7">
-      <video id="vid-cuenta" class="video-layer" src="videos/cuenta.mp4" autoplay muted loop playsinline></video>
-      <div class="text-layer" id="scene-7">
-        <h2 class="s6-title">¿Arrancamos?</h2>
-        <p class="s6-sub">Contame qué necesitás y vemos una opción simple para tu local. Sin compromiso.</p>
-        <div class="cta-row">
-          <a href="https://wa.me/5491100000000" class="btn-wa" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Escribime por WhatsApp
-          </a>
-          <a href="mailto:diego@marchisale.com" class="btn-mail">Mandarme un mail</a>
-        </div>
-        <p class="s6-footer">Buenos Aires, Argentina · Atención 100% online</p>
+    <div class="text-layer" id="scene-7">
+      <h2 class="s6-title">¿Arrancamos?</h2>
+      <p class="s6-sub">Contame qué necesitás y vemos una opción simple para tu local. Sin compromiso.</p>
+      <div class="cta-row">
+        <a href="https://wa.me/5491100000000" class="btn-wa" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribime por WhatsApp
+        </a>
+        <a href="mailto:diego@marchisale.com" class="btn-mail">Mandarme un mail</a>
       </div>
-    </section>
+      <p class="s6-footer">Buenos Aires, Argentina · Atención 100% online</p>
+    </div>
 
   </div><!-- /scroll-container -->
 
   <script>
     gsap.registerPlugin(ScrollTrigger);
-
-    const isMobile = window.innerWidth <= 768;
 
     /* ─── SCROLL HELPERS ─── */
     function totalScrollable() {
@@ -1064,10 +999,6 @@
     // 3=scene4(mesa)   4=scene5(cocina)  5=scene6(portfolio) 6=scene7(cuenta)
     const SCENE_STARTS = [0, 14, 28, 43, 57, 70, 87];
     function scrollToScene(idx) {
-      if (isMobile) {
-        document.getElementById('section-' + (idx + 1)).scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
       window.scrollTo(0, pct(SCENE_STARTS[idx]) + 2);
       ScrollTrigger.update();
     }
@@ -1102,8 +1033,6 @@
       window.removeEventListener('wheel',     noScroll);
       window.removeEventListener('touchmove', noScroll);
     }
-
-    if (!isMobile) {
 
     /* ─── CROSSFADE HELPER ─── */
     function xfade(showSel, hideSel, startPct, endPct) {
@@ -1286,8 +1215,6 @@
       gsap.to(['#scene-7 .s6-title','#scene-7 .s6-sub','#scene-7 .cta-row','#scene-7 .s6-footer'],
         { opacity: 1, y: 0, duration: 0.7, stagger: 0.2, ease: 'power2.out' });
     });
-
-    } // end if (!isMobile)
 
     /* ─── NAV: hamburger ─── */
     const toggle = document.getElementById('nav-toggle');
