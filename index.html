@@ -406,7 +406,7 @@
       font-size: 3.2rem;
       font-weight: 300;
       color: var(--crema);
-      opacity: 0.22;
+      opacity: 0.38;
       margin-bottom: 0.6rem;
       display: block;
       line-height: 1;
@@ -730,19 +730,38 @@
     @media (max-width: 768px) {
       #nav { padding: 1rem 1.25rem; }
 
-      #nav .nav-links {
-        display: none;
+      #nav .nav-links { display: none; }
+
+      #nav .nav-links.open {
+        display: flex;
         flex-direction: column;
-        position: fixed;
-        inset: 0;
-        background: rgba(28,33,24,0.97);
         align-items: center;
         justify-content: center;
         gap: 2.5rem;
-        z-index: 850;
       }
 
-      #nav .nav-links.open { display: flex; }
+      /* Menú abierto: el propio nav se expande a pantalla completa */
+      #nav.menu-open {
+        height: 100dvh;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(28,33,24,0.97);
+        border-bottom: none;
+      }
+
+      #nav.menu-open .logo {
+        position: absolute;
+        top: 1rem;
+        left: 1.25rem;
+      }
+
+      #nav.menu-open #nav-toggle {
+        position: absolute;
+        top: 1.15rem;
+        right: 1.25rem;
+      }
+
       #nav-toggle { display: flex; }
 
       /* escenas: contenido empieza desde arriba con padding para respirar y no cortarse */
@@ -1200,6 +1219,7 @@
 
     toggle.addEventListener('click', () => {
       links.classList.toggle('open');
+      document.getElementById('nav').classList.toggle('menu-open');
       const [b1, b2, b3] = toggle.querySelectorAll('span');
       if (links.classList.contains('open')) {
         gsap.to(b1, { rotation: 45,  y: 7,  duration: 0.3 });
@@ -1212,6 +1232,7 @@
 
     function closeNav() {
       links.classList.remove('open');
+      document.getElementById('nav').classList.remove('menu-open');
       const [b1, b2, b3] = toggle.querySelectorAll('span');
       gsap.to(b1, { rotation: 0, y: 0, duration: 0.3 });
       gsap.to(b2, { opacity: 1,         duration: 0.2 });
