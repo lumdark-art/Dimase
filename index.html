@@ -745,19 +745,41 @@
       #nav .nav-links.open { display: flex; }
       #nav-toggle { display: flex; }
 
-      #scene-2, #scene-3, #scene-5, #scene-6 { padding: 0 5vw; max-width: 100%; }
-      #scene-1 { padding: 0 5vw 8vh; }
+      /* escenas: contenido empieza desde arriba con padding para respirar y no cortarse */
+      #scene-2, #scene-3, #scene-5, #scene-6 { padding: 5rem 5vw 2rem; max-width: 100%; justify-content: flex-start; }
+      #scene-4 { justify-content: flex-start; padding: 5rem 4vw 2rem; }
+      #scene-7 { justify-content: flex-start; padding: 5rem 4vw 2rem; }
+      #scene-1 { padding: 0 5vw 6vh; }
+
+      /* tipografía reducida para pantallas chicas */
+      .s1-title { font-size: clamp(1.8rem, 6.5vw, 3rem); }
+      #scene-2 .s2-title { font-size: clamp(1.4rem, 5vw, 2.2rem); }
+      #scene-3 .s3-title { font-size: clamp(1.3rem, 5.5vw, 1.9rem); margin-bottom: 1rem; }
+      #scene-3 .s3-remate { font-size: clamp(0.9rem, 3.8vw, 1.25rem); }
+      #scene-6 .s6p-title { font-size: clamp(1.3rem, 5vw, 1.9rem); margin-bottom: 0.4rem; }
+      #scene-6 .s6p-para { margin-bottom: 1rem; }
 
       .cards-row { flex-direction: column; align-items: center; }
-      .glass-card { max-width: 100%; flex: unset; width: 100%; }
-      .pain-list { max-width: 100%; }
+      .glass-card { max-width: 100%; flex: unset; width: 100%; padding: 1.25rem; }
+      .pain-list { max-width: 100%; gap: 0.75rem; margin-bottom: 1.25rem; }
+      .pain-item .pain-head { font-size: clamp(0.9rem, 3.5vw, 1.05rem); }
+      .pain-item .pain-desc { font-size: 0.75rem; }
       .portfolio-row { flex-direction: column; }
       .portfolio-card { max-width: 100%; }
+      .pcard-img { min-height: 160px; }
+      .pcard-img img { min-height: auto; }
 
       #scene-7 .s6-title { font-size: clamp(2.4rem, 13vw, 5rem); }
       .btn-row { flex-direction: column; }
       #scene-7 .cta-row { flex-direction: column; align-items: center; }
       .btn-ghost { border: none; padding: 0.4rem 0; font-size: 0.82rem; opacity: 0.65; background: none; }
+    }
+
+    /* pantallas muy pequeñas: ocultar imágenes de portfolio para que los cards quepan */
+    @media (max-width: 480px) {
+      .pcard-img { display: none; }
+      .pcard-bullets { display: none; }
+      .portfolio-row { gap: 0.75rem; }
     }
   </style>
 </head>
